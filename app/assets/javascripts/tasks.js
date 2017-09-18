@@ -6,7 +6,7 @@
     function taskHtml(task) {
       var liClass = task.done ? "completed" : "";
       var checkedStatus = task.done ? "checked" : "";
-      var liElement = '<li class = "' + liClass + '"' + '>' + 
+      var liElement = '<li id="listItem-' + task.id +'" class="' + liClass + '">' + 
         '<div class = "view"><input class = "toggle" type = "checkbox" data-id = "' +
         task.id +
         '"' +
@@ -32,8 +32,6 @@
         ulTodos.append(htmlString);
         $('.toggle').click(toggleTask);
         var message = ''
-        var message1 = "Added :)"
-        setTimeout(message1, 1000)
         $('.new-todo').val(message);
       });
     });
@@ -49,7 +47,13 @@
         task: {
         done: doneValue
         }
-      });
+      }).success(function(data) {
+        var liHtml = taskHtml(data);
+        console.log(liHtml);
+        var $li = $("#listItem-" + data.id);
+        $li.replaceWith(liHtml);
+        $('.toggle').change(toggleTask);
+      })
     }
 
     $.get("/tasks").success( function ( data ) {
