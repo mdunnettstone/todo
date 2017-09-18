@@ -18,6 +18,9 @@ $(function() {
     return liElement;
   }
 
+  //on submit, prevent reload, then send a JSON request to the create function
+  //with the data to submit. Then append it to the current html
+  // and allow for toggling and deletion and clear the text field
   $('#new-form').submit(function(event) {
     event.preventDefault();
     var newTodo = $('.new-todo').val();
@@ -58,6 +61,9 @@ $(function() {
   }
 
   function deleteTask(e) {
+    //deleteTask takes the id of the clicked item and sends a delete
+    //JSON API request to delete it from the database, and visually remove it from html
+    //note: for speed, the deletion is triggered without a success method, so on reload, if unsuccessful, it may still be there
     var itemId = $(e.target).data("id");
     $.post("/tasks/" + itemId, {
       _method: "DELETE",
@@ -81,6 +87,9 @@ $(function() {
 
   $('.clear-completed').click(clearCompleted);
   function clearCompleted(tasks) {
+    //finds all html elements with acompleted class, and iterates thorough them
+    //deletes each one and removes visually
+    //potential for refactor by creating a generic delete method?
     var completed = $("ul.todo-list").find(".completed");
     $.each(completed, function(index, task) {
       $.post("/tasks/" + task.id, {
