@@ -6,7 +6,7 @@ $(function() {
   function taskHtml(task) {
     var liClass = task.done ? "completed" : "";
     var checkedStatus = task.done ? "checked" : "";
-    var liElement = '<li id="listItem-' + task.id +'" class="' + liClass + '">' + 
+    var liElement = '<li id="' + task.id +'" class="' + liClass + '">' + 
       '<div class = "view"><input class = "toggle" type = "checkbox" data-id = "' +
       task.id +
       '"' +
@@ -50,9 +50,10 @@ $(function() {
       }
     }).success(function(data) {
       var liHtml = taskHtml(data);
-      var $li = $("#listItem-" + data.id);
+      var $li = $("#" + data.id);
       $li.replaceWith(liHtml);
       $('.toggle').change(toggleTask);
+      $('.destroy').click(deleteTask);
     })
   }
 
@@ -60,10 +61,10 @@ $(function() {
     var itemId = $(e.target).data("id");
     $.post("/tasks/" + itemId, {
       _method: "DELETE",
-    }).success(function() {
-      var $li = $("#listItem-" + itemId);
-      $li.remove();
     });
+
+    var $li = $("#" + itemId);
+    $li.remove();
   }
 
   $.get("/tasks").success( function ( data ) {
@@ -76,4 +77,18 @@ $(function() {
     $('.toggle').change(toggleTask);
     $('.destroy').click(deleteTask);
   });
+
+
+  $('.clear-completed').click(clearCompleted);
+  function clearCompleted(tasks) {
+    var completed = $("ul.todo-list").find(".completed");
+    $.each(completed, function(index, task) {
+      $.post("/tasks/" + task.id, {
+        _method: "DELETE",
+      });
+
+      var $li = $("#" + task.id);
+      $li.remove();
+    })
+  }
 });
