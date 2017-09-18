@@ -13,17 +13,27 @@ RSpec.describe TasksController, type: :controller do
       response_ids = response_value.collect do |task|
         task["id"]
       end
-      expect(resoinse_ids).to eq([task1.id, task2.id])
+      expect(response_ids).to eq([task1.id, task2.id])
     end
   end
 
   describe "tasks#update" do
-    it "shuold allow tasks to be marked as done" do
+    it "should allow tasks to be marked as done" do
       task = FactoryGirl.create(:task)
       put :update, id: task.id, task: { done: true }
       expect(response).to have_http_status(:success)
       task.reload
       expect(task.done).to eq(true)
+    end
+  end
+
+  describe "tasks#create" do
+    it "should allow new tasks to be created" do
+      post :create, task: { title: "Make TDD task" }
+      expect(response).to have_http_status(:success)
+      response_value = ActiveSupport::JSON.decode(@response.body)
+      expect(response_value['title']).to eq("Make TDD task")
+      expect(Task.last.title).to eq("Make TDD task")
     end
   end
 end
