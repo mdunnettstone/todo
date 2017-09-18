@@ -5,7 +5,7 @@ RSpec.describe TasksController, type: :controller do
     it "should list the tasks in the database" do
       task1 = FactoryGirl.create(:task)
       task2 = FactoryGirl.create(:task)
-      task1.update_attributes(title = "Something else")
+      task1.update_attributes(title: "Something else")
       get :index
       expect(response).to have_http_status :success
       response_value = ActiveSupport::JSON.decode(@response.body)
@@ -34,6 +34,14 @@ RSpec.describe TasksController, type: :controller do
       response_value = ActiveSupport::JSON.decode(@response.body)
       expect(response_value['title']).to eq("Make TDD task")
       expect(Task.last.title).to eq("Make TDD task")
+    end
+  end
+
+  describe "tasks#destroy" do
+    it "should allow tasks to be deleted" do
+      task = FactoryGirl.create(:task)
+      delete :destroy, id: task.id
+      expect(Task.count).to eq(0)
     end
   end
 end
