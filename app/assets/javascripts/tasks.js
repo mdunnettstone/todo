@@ -4,8 +4,10 @@
     // of the task and produces an HTML representation using
     // <li> tags    
     function taskHtml(task) {
+      var liClass = task.done ? "completed" : "";
       var checkedStatus = task.done ? "checked" : "";
-      var liElement = '<li><div class = "view"><input class = "toggle" type = "checkbox" data-id = "' +
+      var liElement = '<li class = "' + liClass + '"' + '>' + 
+        '<div class = "view"><input class = "toggle" type = "checkbox" data-id = "' +
         task.id +
         '"' +
         checkedStatus + 
@@ -29,6 +31,10 @@
         var ulTodos = $('.todo-list');
         ulTodos.append(htmlString);
         $('.toggle').click(toggleTask);
+        var message = ''
+        var message1 = "Added :)"
+        setTimeout(message1, 1000)
+        $('.new-todo').val(message);
       });
     });
 
