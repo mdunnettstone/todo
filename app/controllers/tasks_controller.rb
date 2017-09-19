@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    render json: Task.order(:id)
+    render json: current_user.tasks.order(:id)
   end
 
   def update
@@ -10,7 +10,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    task = Task.create(task_params)
+    task = current_user.tasks.create(task_params)
     render json: task
   end
 

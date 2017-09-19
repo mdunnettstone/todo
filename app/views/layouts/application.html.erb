@@ -9,6 +9,59 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div id="flex-content-container" class = "todoapp">
+      <nav class="navbar navbar-toggleable-md navbar-light" style="background-color: #DCDCDC;">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <%= link_to 'Todos', root_path, class: 'navbar-brand' %>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class = "nav-item pull-xs-left">
+              
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            <% if user_signed_in? %>
+              <li class="nav-item">
+                <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+                  <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp
+                  Sign out
+                <% end %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to new_user_session_path, class: 'nav-link' do %>
+                  <i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp
+                  Sign in &nbsp
+                <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to new_user_registration_path, class: 'nav-link' do %>
+                <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp
+                Sign up
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+      <% if notice.present? %>
+        <p class="alert alert-info col-10 offset-1 my-2"><%= notice %></p>
+      <% end %>
+      <% if alert.present? %>
+        <p class="alert alert-danger col-10 offset-1 my-2"><%= alert %></p>
+      <% end %>
+      <%= yield %>
+    </div>
+    <div id="footer">
+      <div class="container">
+        <b>Credit</b>
+        <br />
+        A <%= link_to 'todoMVC', "http://todomvc.com" %> application, built by 
+        <%= link_to 'Mike Dunnett-Stone', "http://www.github.com/mdunnettstone" %>
+      </div>
+    </div>
   </body>
 </html>

@@ -1,21 +1,20 @@
-<section class = "todoapp">
-  <header class = "header">
-    <h1>todos</h1>
-    <form id = "new-form">
-      <input type = "text" class = "new-todo" placeholder="+ Add a todo" />
+<section class = "todoapp mb-3">
+  <header class = "header col-10 offset-1 col-md-6 offset-3">
+    <h1 class = "py-2 text-center">todos</h1>
+    <form id = "new-form" class = "mt-0 content">
+      <input type = "text" class = "new-todo col-12" placeholder="+ Add a todo" />
     </form>
   </header>
 
-  <section class = "main">
+  <div class = "clear"></div>
+  <section class = "main col-10 offset-1 col-md-6 offset-3 content">
     <ul class = "todo-list">
 
     </ul>
   </section>
-</section>
-
-<button class = "clear-completed">Clear completed</button>
-
-<section class = "author">
-A <%= link_to 'todoMVC', "http://todomvc.com" %> application, built by 
-<%= link_to 'Mike Dunnett-Stone', "http://www.github.com/mdunnettstone" %>
+  <div class = "col-12 text-center">
+    <button class = "clear-completed">Clear completed</button>
+    <br />
+  </div>
+  <br />
 </section>
